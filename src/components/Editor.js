@@ -1,5 +1,5 @@
 import React from 'react';
-import 'codemirror/lib/codemiror.css';
+import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 
 import 'codemirror/mode/xml/xml';
@@ -8,7 +8,13 @@ import 'codemirror/mode/css/css';
 
 import { Controlled as ControlledEditor } from 'react-codemirror2'
 
-function Editor() {
+function Editor(props) {
+    const {displayName, language, value, onChange } = props
+
+    function handleChange(editor, data, value ) {
+        onChange(value)
+    }
+
     return (
         <div className="editor__container">
            <div className="editor__title">
@@ -18,7 +24,14 @@ function Editor() {
             <ControlledEditor 
                 onBeforeChange={handleChange}
                 value={value}
-                className="code-mirror__wrapper "
+                className="code-mirror__wrapper"
+                options={{
+                    linewrapping: true,
+                    lint: true,
+                    mode: language,
+                    theme: 'material',
+                    lineNumbers: true
+                }}
             />
       </div>
     ); 
